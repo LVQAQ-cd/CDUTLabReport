@@ -1,0 +1,67 @@
+\section{模板使用基本知识}
+文档模板严格按照成都理工大学本科生实验报告模板撰写，部分略有不同。纠正了原word版本中一些错误，严格按照国际文档书写排版标准重新定制内容格式。本模板适用于\textbf{新手}，讲述内容不全面也不够精细，但是对于新人书写实验报告足够了，想要精细学习的读者可以阅读\href{http://mirror.lzu.edu.cn/CTAN/info/lshort/chinese/lshort-zh-cn.pdf}{lshort}开始，进阶可以阅读刘海洋的书籍。对本模板有意见或者不懂之处欢迎致电作者，邮箱：549274614@qq.com，或加入本校交流群：77586170。
+
+在开始介绍前首先介绍我们所接触的\LaTeX 中的3种名词，分别是套装发行版、编译引擎与编译器。
+\begin{itemize}
+\item \textbf{套装发行版：}俗称\LaTeX 的核心，常见的有CTeX套装、TeXlive套装（作者使用）、MacTeX套装等等，本文使用TeXlive2019版本，下载地址为\url{http://tug.org/texlive/}。
+
+\item \textbf{编译引擎：}也是编译时点的按钮，本文采用魔法注释设置了编译引擎为\hologo{XeLaTeX} ，也是中文文档排版常用的编译引擎，其他的编译引擎有\hologo{pdfLaTeX}、\LaTeX{}、\hologo{BibTeX}等等。
+ 
+\item \textbf{编辑器：}顾名思义，编辑器就是编辑\hologo{TeX}文档所用的软件，编写本文档使用的是TeXstudio，也是作者推荐的一款编辑器，网上可以免费下载。下载tl2018时也会自带编辑器，名为TeXwork，也是一款很好的编辑器，编辑器的种类很多，甚至于word都可以拿来写\hologo{TeX}代码，只不过\hologo{TeX}编辑器拥有自带的语法高亮、自动补全等快捷方式。
+\end{itemize}
+
+\textbf{阅读或使用本模板时建议与\hologo{TeX}文档对比学习。}
+\subsection{文件结构}
+解压压缩包后，内含的文件内容与结构如下
+\begin{itemize}
+\item \textbf{成都理工大学实验报告模板.pdf}：本文件，内包括写作方法与注意事项；
+\item \textbf{CDUTLabReport-demo.tex}：实验报告主文件，包括报告整体结构与一些全局定义；
+\item \textbf{attachment文件夹}：内含文件attachment.pdf与attachment.docx，为实验报告中的心得体会，具体书写方式详见文末心得体会处；
+\item \textbf{body文件夹}：内含各章节\hologo{TeX}文档（如section\_1.tex），方便起见，每一章（每一实验）单独使用一个文档书写；
+\item \textbf{figure文件夹}：文档中各类图片依照命名规范至于此文件夹中，方便统一管理，在导入图片时可以不用添加\verb|figure/|；
+\item \textbf{cover文件夹}：内含文档cover.tex为首页封面与目录设置，\textbf{除特殊情况请勿更改}；
+\item \textbf{coverfig文件夹}：内含“成都理工大学”封面图片，\textbf{除特殊情况请勿更改}；
+\item \textbf{texclear.bat}：用于清理辅助文件。
+\item \textbf{cdutlabreport.cls}：成都理工大学实验报告类文档，其中包括格式等全局设置，\textbf{除特殊情况请勿更改}
+\end{itemize}
+\subsection{文档结构}
+打开文件CDUTLabReport.tex文件后，内为文档内容结构
+\begin{minted}{LaTeX}
+% !TeX encoding = UTF8
+% !TEX TXS-program:compile = txs:///xelatex/[-shell-escape]
+\documentclass{cdutlabreport}
+%----------------------------------------title page setting-----------------
+\course{\LaTeX 书写行为规范}
+\academyname{利用\LaTeX 书写成都理工大学实验报告}
+\profession{专业全称（有专业方向的用小括号标明）}
+\studentName{您的姓名}
+\studentId{您的学号}
+\teacherName{您的授课或者指导老师}
+\location{授课地点（如：6C403）}
+\grade{由指导老师书写}
+\startDate{二〇一九年十二月}
+\lastDate{二〇二〇年二月}
+
+\begin{document}
+\include{cover/cover}
+%----------------------------------------body--------------------------------
+\include{body/update}
+\include{body/section_1}
+\include{body/section_2}
+\include{body/section_3}
+\include{body/section_4}
+\include{body/section_5}
+%----------------------------------------attachment--------------------------
+\include{attachment/attachment}
+\end{document}
+\end{minted}
+
+\verb|\doucumentclass[...]\{...}|称为设置文档类型，本模板使用成都理工大学的cdutlabreport类型。
+
+在\verb|\doucumentclass|与\verb|\begin{document}|中间称为\textbf{导言区}，学生需要在这里依次填写实验课程、实验名称、专业名称、学生姓名、学生学号、指导教师、实验地点和实验成绩，代替中括号内的内容即可。
+
+文档内容使用\verb|\include{file}|逐个添加，便于整体管理的同时也使主文档美观简介。cover为文档封面与目录，\textbf{除特殊情况请勿更改}，body内为文档各章节，attachment为学生实验心得。
+
+文档实验报告内容从\verb|\begin{document}|开始，结束于\verb|\end{document}|。
+
+由$\% !TeX$开头的两行为texstudio编辑器特有的魔法注释，意为使用UTF-8编码，编译引擎使用xelatex，由于本文代码高亮采用\verb|minted|包，所以添加了\verb|-shell-escape|，\textbf{若读者电脑中没有python环境，则无法正常编辑本文档，但不影响使用}。
